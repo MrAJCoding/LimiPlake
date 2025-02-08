@@ -1,0 +1,38 @@
+body {
+  background-color: #d43dcc;
+}
+
+.qrcode {
+  height: 60px;
+  width: 60px;
+}
+
+.ntext {
+  font-family: Optima, sans-serif;
+}
+
+.atext {
+  font-family:rajdhani;
+}
+.title {
+font-family:Playwrite NG Modern Guides;
+}
+.eo {
+position: relative; 
+width: 100%; 
+height: 0; 
+padding-top: 100.0000%;
+padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; 
+overflow: hidden;
+border-radius: 8px; will-change: transform;
+}
+.et {
+ position: absolute; 
+width: 20%; 
+height: 20%; 
+top: 0; 
+left: 0; 
+border: 30px solid #B8860B; 
+padding: 0;
+margin: 0;
+}
