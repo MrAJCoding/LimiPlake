@@ -1,5 +1,5 @@
 body {
-background: linear-gradient(to top left, #ff99ff 0%, #0099ff 100%);
+background: linear-gradient(to top left, #ff99ff 100%, #0099ff 100%);
 }
 
 .qrcode {
