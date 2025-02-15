@@ -36,11 +36,6 @@ border: 30px solid #B8860B;
 padding: 0;
 margin: 0;
 }
-
-button {
-cursor: pointer;
-}
 input {
-  cursor: not-allowed;
-  width: 360px;
+  cursor: pointer;
 }
