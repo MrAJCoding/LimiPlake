@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <script>
+        emailjs.send("service_26ox5fd", "template_9857eol", params)
+    .then(function(response) {
+        console.log("Message sent successfully: ", response);
+    }, function(error) {
+        console.log("Failed to send message: ", error);
+    });
+
+    </script>
 </head>
 <body>
     <h2>Become a Student</h2>
