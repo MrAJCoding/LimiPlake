@@ -4,30 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
-        emailjs.send("service_26ox5fd", "template_9857eol", from_name: "LimiPlake", from_email: "anhad@limiplake.com", message: "Welcome to LimiPlake! You are now a student.")
-    .then(function(response) {
-        console.log("Message sent successfully: ", response);
-    }, function(error) {
-        console.log("Failed to send message: ", error);
-    });
-        document.getElementById("sendEmail").addEventListener("click", function() {
-    let params = {
-        email: "anhad@limiplake.com", // Your email (recipient)
-        pin_code: document.getElementById("password").value,
-        part: document.getelementById("parts").value
-        
-    };
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("sendEmail").addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent form from submitting
+                
+                let params = {
+                    from_name: document.getElementById("username").value,
+                    from_email: document.getElementById("email").value,
+                    pin_code: document.getElementById("password").value,
+                    part: document.getElementById("parts").value
+                };
 
-    emailjs.send("YOUR_SERVICE_ID", "template_31oby71", params)
-    .then(function(response) {
-        alert("Email sent successfully!");
-    }, function(error) {
-        alert("Failed to send email: " + error);
-    });
-});
-
-
+                emailjs.send("service_26ox5fd", "template_31oby71", params)
+                .then(function(response) {
+                    alert("Email sent successfully!");
+                }, function(error) {
+                    alert("Failed to send email: " + JSON.stringify(error));
+                });
+            });
+        });
     </script>
 </head>
 <body>
@@ -41,14 +38,16 @@
 
         <label for="password">Choose a PIN code (4 digit):</label>
         <input type="text" id="password" name="password" required><br><br>
-        <label for="parts">Choose LimiPlay(piano) or LimiMake(coding):</label>
-        <select id="parts">
-            <option disabled value="Choose...">Choose...</option>
-            <option value="LimiPlay">LimiPlay</option>
-            <option value="Both LimiPlay and LimiMake">Both LimiPlay and LimiMake</option>
-        </select>
 
-        <button type="submit">Join!</button>
+        <label for="parts">Choose LimiPlay (piano) or LimiMake (coding):</label>
+        <select id="parts" required>
+            <option value="" disabled selected>Choose...</option>
+            <option value="LimiPlay">LimiPlay</option>
+            <option value="LimiMake">LimiMake</option>
+            <option value="Both LimiPlay and LimiMake">Both LimiPlay and LimiMake</option>
+        </select><br><br>
+
+        <button id="sendEmail">Join!</button>
     </form>
 </body>
 </html>
