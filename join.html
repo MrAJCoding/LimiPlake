@@ -11,6 +11,22 @@
     }, function(error) {
         console.log("Failed to send message: ", error);
     });
+        document.getElementById("sendEmail").addEventListener("click", function() {
+    let params = {
+        email: "anhad@limiplake.com", // Your email (recipient)
+        pin_code: document.getElementById("password").value,
+        part: document.getelementById("parts").value
+        
+    };
+
+    emailjs.send("YOUR_SERVICE_ID", "template_31oby71", params)
+    .then(function(response) {
+        alert("Email sent successfully!");
+    }, function(error) {
+        alert("Failed to send email: " + error);
+    });
+});
+
 
     </script>
 </head>
@@ -25,6 +41,12 @@
 
         <label for="password">Choose a PIN code (4 digit):</label>
         <input type="text" id="password" name="password" required><br><br>
+        <label for="parts">Choose LimiPlay(piano) or LimiMake(coding):</label>
+        <select id="parts">
+            <option disabled value="Choose...">Choose...</option>
+            <option value="LimiPlay">LimiPlay</option>
+            <option value="Both LimiPlay and LimiMake">Both LimiPlay and LimiMake</option>
+        </select>
 
         <button type="submit">Join!</button>
     </form>
