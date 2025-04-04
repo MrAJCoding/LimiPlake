@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Register</title>
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             emailjs.init("oAbObyX_TdjrNh-4A"); // Add your EmailJS public key
-            
-            
-        document.addEventListener("DOMContentLoaded", function() {
+
             document.getElementById("sendEmail").addEventListener("click", function(event) {
                 event.preventDefault(); // Prevent form from submitting
-            }
-                
+
+                // Collecting form input values
                 let params = {
                     from_name: document.getElementById("username").value,
                     from_email: document.getElementById("email").value,
@@ -23,12 +20,13 @@
                     part: document.getElementById("parts").value
                 };
 
+                // Sending email using EmailJS
                 emailjs.send("service_26ox5fd", "template_31oby71", params)
-                .then(function(response) {
-                    alert("Email sent successfully!");
-                }, function(error) {
-                    alert("Failed to send email: " + JSON.stringify(error));
-                });
+                    .then(function(response) {
+                        alert("Email sent successfully!");
+                    }, function(error) {
+                        alert("Failed to send email: " + JSON.stringify(error));
+                    });
             });
         });
     </script>
