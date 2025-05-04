@@ -31,7 +31,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Initialize EmailJS with your User ID
-            emailjs.init("YOUR_USER_ID"); // Replace with your actual User ID
+            emailjs.init("oAbObyX_TdjrNh-4A"); // Replace with your actual User ID
 
             document.getElementById("sendEmail").addEventListener("click", function(event) {
                 event.preventDefault(); // Prevent form submission
@@ -46,7 +46,7 @@
                 console.log("Params to be sent:", params); // Log params for debugging
 
                 // Send email using EmailJS
-                emailjs.send("YOUR_SERVICE_ID", "31oby7l", params)  // Replace with your actual Template ID
+                emailjs.send("service_1l2p3li5", "31oby7l", params)  // Replace with your actual Template ID
                     .then(function(response) {
                         console.log("Email sent successfully:", response);
                         alert("Email sent successfully!");
