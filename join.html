@@ -28,5 +28,33 @@
 
         <button id="becomeAStudent" type="submit">Click here to submit your info and become a student</button>
     </form>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize EmailJS with your User ID
+            emailjs.init("YOUR_USER_ID"); // Replace with your actual User ID
+
+            document.getElementById("sendEmail").addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent form submission
+
+                // Collect form input values
+                let params = {
+                    to_email: "anhad@limiplake.com"
+                    pin_code: document.getElementById("password").value,
+                    part: document.getElementById("parts").value
+                };
+
+                console.log("Params to be sent:", params); // Log params for debugging
+
+                // Send email using EmailJS
+                emailjs.send("YOUR_SERVICE_ID", "31oby7l", params)  // Replace with your actual Template ID
+                    .then(function(response) {
+                        console.log("Email sent successfully:", response);
+                        alert("Email sent successfully!");
+                    }, function(error) {
+                        console.error("Failed to send email:", error);
+                        alert("Failed to send email: " + JSON.stringify(error));
+                    });
+            });
+        });
 </body>
 </html>
