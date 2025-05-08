@@ -4,57 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <script src="email.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 </head>
 <body>
     <h2>Become a Student</h2>
     <form>
         <label for="username">Name:</label>
-        <input type="text" id="username" name="username" required><br><br>
+        <input type="text" id="username" name="name" required><br><br>
 
         <label for="email">Email:</label>
         <input type="email" id="email" name="email"><br><br>
 
         <label for="password">Choose a PIN code (4 digit):</label>
-        <input type="text" id="password" name="password" required><br><br>
+        <input type="text" id="password" name="pin" required><br><br>
 
         <label for="parts">Choose LimiPlay (piano) or LimiMake (coding):</label>
-        <select id="parts" required>
+        <select id="parts" required name="part">
             <option value="" disabled selected>Choose...</option>
             <option value="LimiPlay">LimiPlay</option>
             <option value="LimiMake">LimiMake</option>
             <option value="Both LimiPlay and LimiMake">Both LimiPlay and LimiMake</option>
         </select><br><br>
 
-        <button id="becomeAStudent" type="submit">Click here to submit your info and become a student</button>
+        <button id="becomeAStudent" type="button">Click here to submit your info and become a student</button>
     </form>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Initialize EmailJS with your User ID
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize EmailJS
             emailjs.init("oAbObyX_TdjrNh-4A"); // Replace with your actual User ID
 
-            document.getElementById("sendEmail").addEventListener("click", function(event) {
-                event.preventDefault(); // Prevent form submission
+            document.getElementById("becomeAStudent").addEventListener("click", function (event) {
+                event.preventDefault(); // Stop the form from refreshing
 
-                // Collect form input values
+                // Get input values
                 let params = {
-                    to_email: "anhad@limiplake.com"
+                    to_email: "anhad@limiplake.com",
+                    username: document.getElementById("username").value,
+                    email: document.getElementById("email").value,
                     pin_code: document.getElementById("password").value,
                     part: document.getElementById("parts").value
                 };
 
-                console.log("Params to be sent:", params); // Log params for debugging
+                console.log("Params to be sent:", params);
 
-                // Send email using EmailJS
-                emailjs.send("service_1l2p3li5", "31oby7l", params)  // Replace with your actual Template ID
-                    .then(function(response) {
+                // Send email
+                emailjs.send("service_1l2p3li5", "template_31oby7l", params)
+                    .then(function (response) {
                         console.log("Email sent successfully:", response);
                         alert("Email sent successfully!");
-                    }, function(error) {
+                    }, function (error) {
                         console.error("Failed to send email:", error);
                         alert("Failed to send email: " + JSON.stringify(error));
                     });
             });
         });
+    </script>
 </body>
 </html>
