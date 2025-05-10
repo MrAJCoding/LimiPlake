@@ -9,8 +9,11 @@
 <body>
     <h2>Become a Student</h2>
     <form>
-        <label for="username">Name:</label>
-        <input type="text" id="name" name="name" required><br><br>
+        <label for="username">First Name:</label>
+        <input type="text" id="firstname" name="firstname" required><br><br>
+
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname"
 
         <label for="email">Email:</label>
         <input type="email" id="email" name="email"><br><br>
@@ -30,30 +33,53 @@
     </form>
 
     <script>
+        var firstName = document.getElementById("firstname").value;
+        var lastName = document.getElementById("lastname").value;
+        var fullName = firstName + " " + lastName;
+        
         document.addEventListener("DOMContentLoaded", function () {
             emailjs.init("oAbObyX_TdjrNh-4A"); // Your EmailJS user ID
 
             document.getElementById("becomeAStudent").addEventListener("click", function (event) {
                 event.preventDefault();
 
-                let params = {
+                let paramsme = {
                     to_email: "anhad@limiplake.com",
-                    name: document.getElementById("name").value,
+                    name: fullName,
                     email: document.getElementById("email").value,
                     pin_code: document.getElementById("pin").value,
                     part: document.getElementById("parts").value
                 };
+                let paramscli = {
+                    to_name: firstName,
+                    full_name: fullName,
+                    email: document.getElementById("email").value,
+                    pin: document.getElementById("pin").value,
+                    to_email: document.getElementById("email").value,
+                    from_name: "LimiPlake",
+                    from_email: "no-replying@limiplake.com"
+                }
+                    
 
-                console.log("Params to be sent:", params);
+                console.log("Params to be sent:", paramsme);
 
-                emailjs.send("service_1l2p3li5", "template_31oby7l", params)
+                emailjs.send("service_1l2p3li5", "template_31oby7l", paramsme)
                     .then(function (response) {
                         console.log("Email sent successfully:", response);
                         // Redirect after success
                         window.location.href = "thankyou.html";
                     }, function (error) {
                         console.error("Failed to send email:", error);
-                        alert("Failed to send email: " + JSON.stringify(error));
+                        alert("Failed to make you a student: " + JSON.stringify(error) + ": Do not visit any of these links, please!");
+                    });
+                 emailjs.send("service_1l2p3li5", "template_douh9uo", paramscli)
+                    .then(function (response) {
+                        console.log("Email sent successfully:", response);
+                        // Redirect after success
+                        window.location.href = "/joined";
+                    }, function (error) {
+                        console.error("Failed to send email:", error);
+                        alert("Failed to make you a student: " + JSON.stringify(error) + ": Do not visit any of these links, please!");
                     });
             });
         });
