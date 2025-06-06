@@ -4,44 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Become a Student - LimiPlake</title>
-    <script src="email.js"></script>
-</head>
-<body>
-    <h2>Become a Student</h2>
-    <form>
-        <label for="username">First Name:</label>
-        <input type="text" id="firstname" name="firstname" required><br><br>
-
-        <label for="lastname">Last Name:</label>
-        <input type="text" id="lastname" name="lastname"><br><br>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email"><br><br>
-
-        <label for="password">Choose a PIN code (4 digit):</label>
-        <input type="text" id="pin" name="pin" required><br><br>
-
-        <label for="parts">Choose LimiPlay (piano) or LimiMake (coding):</label>
-        <select id="parts" required name="part">
-            <option value="" disabled selected>Choose...</option>
-            <option value="LimiPlay">LimiPlay</option>
-            <option value="LimiMake">LimiMake</option>
-            <option value="Both LimiPlay and LimiMake">Both LimiPlay and LimiMake</option>
-        </select><br><br>
-
-        <button id="becomeAStudent" type="submit">Click here to submit your info and become a student</button>
-    </form>
-
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script>
-        var firstName = document.getElementById("firstname").value;
-        var lastName = document.getElementById("lastname").value;
-        var fullName = firstName + " " + lastName;
-        
         document.addEventListener("DOMContentLoaded", function () {
             emailjs.init("oAbObyX_TdjrNh-4A"); // Your EmailJS user ID
 
             document.getElementById("becomeAStudent").addEventListener("click", function (event) {
                 event.preventDefault();
+
+                // 🟢 Get the latest values from inputs
+                var firstName = document.getElementById("firstname").value;
+                var lastName = document.getElementById("lastname").value;
+                var fullName = firstName + " " + lastName;
 
                 let paramsme = {
                     to_email: "anhad@limiplake.com",
@@ -59,30 +33,54 @@
                     from_name: "LimiPlake",
                     from_email: "no-replying@limiplake.com"
                 }
-                    
 
                 console.log("Params to be sent:", paramsme);
 
                 emailjs.send("service_1l2p3li5", "template_31oby7l", paramsme)
                     .then(function (response) {
                         console.log("Email sent successfully:", response);
-                        // Redirect after success
-                        window.location.href = "thankyou.html";
-                    }, function (error) {
-                        console.error("Failed to send email:", error);
-                        alert("Failed to make you a student: " + JSON.stringify(error) + ": Do not visit any of these links, please!");
-                    });
-                 emailjs.send("service_1l2p3li5", "template_douh9uo", paramscli)
-                    .then(function (response) {
-                        console.log("Email sent successfully:", response);
-                        // Redirect after success
                         window.location.href = "/joined";
                     }, function (error) {
-                        console.error("Failed to send email:", error);
-                        alert("Failed to make you a student: " + JSON.stringify(error) + ": Do not visit any of these links, please!");
+                        console.error("Couldn't make a student: lprr jn (emjs", error + ") Do not visit any of these links; instead, email anhad@limiplake.com this exact error.");
+                        alert("Couldn't make you a student: lprr jn (emjs " + JSON.stringify(error) + ") Do not visit any of these links; instead, email anhad@limiplake.com this exact error.");
+                    });
+
+                emailjs.send("service_1l2p3li5", "template_douh9uo", paramscli)
+                    .then(function (response) {
+                        console.log("Client email sent successfully:", response);
+                        window.location.href = "/joined";
+                    }, function (error) {
+                        console.error("Couldn't make a student: lprr jn (emjs", error + ") Do not visit any of these links; instead, email anhad@limiplake.com this exact error.");
+                        alert("Couldn't make you a student: lprr jn (emjs " + JSON.stringify(error) + ") Do not visit any of these links; instead, email anhad@limiplake.com this exact error.");
                     });
             });
         });
     </script>
+</head>
+<body>
+    <h2>Become a Student</h2>
+    <form>
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname" required><br><br>
+
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br><br>
+
+        <label for="pin">Choose a PIN code (4 digit):</label>
+        <input type="text" id="pin" name="pin" required><br><br>
+
+        <label for="parts">Choose LimiPlay (piano) or LimiMake (coding):</label>
+        <select id="parts" required name="part">
+            <option value="" disabled selected>Choose...</option>
+            <option value="LimiPlay">LimiPlay</option>
+            <option value="LimiMake">LimiMake</option>
+            <option value="Both LimiPlay and LimiMake">Both LimiPlay and LimiMake</option>
+        </select><br><br>
+
+        <button id="becomeAStudent" type="submit">Click here to submit your info and become a student</button>
+    </form>
 </body>
 </html>
