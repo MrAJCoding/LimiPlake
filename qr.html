@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The LimiPlake  QR Code Generator (URL, Email, Text)</title>
+  <style>
+    /* Basic page styling */
+    body {
+      text-align: center;
+      font-family: sans-serif;
+      padding: 20px;
+      background-color: #42ebaa;
+    }
+
+    /* Style for input fields, buttons, textareas, selects */
+    input, button, select, textarea {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+    }
+
+    /* Special rainbow background for the mode selector */
+    #mode {
+      background: linear-gradient(to bottom right, #ff0000, #00ff00, #0000ff);
+    }
+
+    /* Black background and white text for size selector */
+    #size {
+      background-color: #000000;
+      color: #ffffff;
+    }
+
+    /* Final canvas where the QR code will be displayed */
+    canvas {
+      margin-top: 20px;
+      border: 1px solid #ddd;
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main heading -->
+  <h1>LimiPlake QR Code Generator</h1>
+
+  <!-- Dropdown to choose what kind of QR code you want -->
+  <label>Type:
+    <select id="mode" onchange="updateForm()">
+      <option value="url">URL</option>
+      <option value="email">Email</option>
+      <option value="text">Text</option>
+    </select>
+  </label>
+  <br>
+
+  <!-- This section changes based on the selected mode (URL, Email, Text) -->
+  <div id="input-area">
+    <!-- JavaScript will put the correct input fields here -->
+  </div>
+
+  <!-- File uploader for inserting a logo into the center of the QR code -->
+  <input type="file" id="upload" accept="image/*" />
+  <br>
+
+  <!-- Choose the size of the QR code -->
+  <label>QR Size:
+    <select id="size">
+      <option value="200">200x200</option>
+      <option value="300" selected>300x300</option>
+      <option value="400">400x400</option>
+    </select>
+  </label>
+  <br>
+
+  <!-- Choose top and bottom gradient colors -->
+  <label>Gradient Top Color: <input type="color" id="color1" value="#14b393"></label>
+  <label>Gradient Bottom Color: <input type="color" id="color2" value="#000000"></label>
+  <br>
+
+  <!-- Buttons to generate and download the QR code -->
+  <button onclick="makeCode()">Generate QR</button>
+  <button onclick="downloadQR()">Download QR</button>
+
+  <!-- This hidden div is used by the QRCode.js library to generate an image -->
+  <div id="qrcode" style="display:none;"></div>
+
+  <!-- Final canvas where the QR code + gradient + logo is combined -->
+  <canvas id="finalCanvas"></canvas>
+
+  <!-- Import QRCode.js library (for generating basic black/white QR) -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <script>
+    // This will hold the uploaded logo image
+    let uploadedLogo = null;
+
+    // When user uploads an image, store it as a data URL in uploadedLogo
+    document.getElementById("upload").addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        uploadedLogo = event.target.result; // this is a base64-encoded image
+      };
+      reader.readAsDataURL(file); // read file as a data URL
+    });
+
+    // This function updates the form depending on the selected mode
+    function updateForm() {
+      const mode = document.getElementById("mode").value;
+      const inputArea = document.getElementById("input-area");
+
+      if (mode === "url") {
+        // For URLs, user picks http/https and types domain
+        inputArea.innerHTML = `
+          <select id="httpors">
+            <option value="http://">http://</option>
+            <option value="https://">https://</option>
+          </select>
+          <input type="text" placeholder="example.com" id="urlcontent">
+        `;
+      } else if (mode === "email") {
+        // For emails, show to/cc/bcc/subject/body fields
+        inputArea.innerHTML = `
+          <label for="to">To: </label><input type="text" id="to"><br>
+          <label for="cc">Cc: </label><input type="text" id="cc"><br>
+          <label for="bcc">Bcc: </label><input type="text" id="bcc"><br>
+          <label for="subject">Subject: </label><input type="text" id="subject"><br>
+          <label for="email">Message: </label><br><textarea id="email"></textarea>
+        `;
+      } else {
+        // For plain text, just one textarea
+        inputArea.innerHTML = `
+          <label for="txt">Content:</label><br>
+          <textarea id="txt" rows="4" cols="40" placeholder="Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amet consectetur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque."></textarea>
+        `;
+      }
+    }
+
+    // This function generates the QR code and puts it on the final canvas
+    function makeCode() {
+      const type = document.getElementById("mode").value;
+      const size = parseInt(document.getElementById("size").value);
+      const colorTop = document.getElementById("color1").value;
+      const colorBottom = document.getElementById("color2").value;
+      let data = ""; // this will be the actual data encoded in the QR
+
+      // Figure out what data to encode
+      if (type === "url") {
+        const proto = document.getElementById("httpors").value;
+        const url = document.getElementById("urlcontent").value.trim();
+        if (!url) return alert("Please enter a URL!");
+        data = proto + url;
+      } else if (type === "email") {
+        const to = document.getElementById("to").value.trim();
+        const cc = document.getElementById("cc").value.trim();
+        const bcc = document.getElementById("bcc").value.trim();
+        const subject = encodeURIComponent(document.getElementById("subject").value.trim());
+        const body = encodeURIComponent(document.getElementById("email").value.trim());
+
+        if (!to) return alert("Please enter the 'To' email address!");
+
+        const params = [];
+        if (cc) params.push("cc=" + cc);
+        if (bcc) params.push("bcc=" + bcc);
+        if (subject) params.push("subject=" + subject);
+        if (body) params.push("body=" + body);
+
+        data = `mailto:${to}` + (params.length ? `?${params.join("&")}` : "");
+      } else {
+        data = document.getElementById("txt").value.trim();
+        if (!data) return alert("Please enter the text content!");
+      }
+
+      // Get the canvas and prepare it
+      const qrcodeDiv = document.getElementById("qrcode");
+      const canvas = document.getElementById("finalCanvas");
+      canvas.width = size;
+      canvas.height = size;
+
+      // Clear any previous QR code
+      qrcodeDiv.innerHTML = "";
+
+      // Generate QR using QRCode.js — this puts a black-and-white <img> in the hidden div
+      new QRCode(qrcodeDiv, {
+        text: data,
+        width: size,
+        height: size,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+
+      // Wait 300ms to let QRCode.js generate the image
+      setTimeout(() => {
+        const qrImg = qrcodeDiv.querySelector("img"); // get the image QRCode.js created
+        const ctx = canvas.getContext("2d");          // get 2D canvas context
+
+        const baseImage = new Image();
+        baseImage.onload = function () {
+          // Clear canvas and draw the gradient background
+          ctx.clearRect(0, 0, size, size);
+          const gradient = ctx.createLinearGradient(0, 0, 0, size);
+          gradient.addColorStop(0, colorTop);
+          gradient.addColorStop(1, colorBottom);
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, size, size);
+
+          // Create a mask canvas (copy of QR image) to make white parts transparent
+          const maskCanvas = document.createElement("canvas");
+          maskCanvas.width = size;
+          maskCanvas.height = size;
+          const maskCtx = maskCanvas.getContext("2d");
+          maskCtx.drawImage(baseImage, 0, 0, size, size);
+          const maskData = maskCtx.getImageData(0, 0, size, size);
+
+          // Read gradient image data
+          const imageData = ctx.getImageData(0, 0, size, size);
+
+          // Set alpha = 0 for white pixels (i.e., hide them)
+          for (let i = 0; i < imageData.data.length; i += 4) {
+            const r = maskData.data[i]; // red channel
+            if (r > 100) {
+              imageData.data[i + 3] = 0; // make transparent
+            }
+          }
+
+          // Put modified image back onto canvas
+          ctx.putImageData(imageData, 0, 0);
+
+          // If user uploaded a logo, draw it in the center
+          if (uploadedLogo) {
+            const logo = new Image();
+            logo.onload = function () {
+              const logoSize = size * 0.25; // 25% of QR code
+              const logoX = (size - logoSize) / 2;
+              const logoY = (size - logoSize) / 2;
+              ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
+            };
+            logo.src = uploadedLogo;
+          }
+        };
+
+        // Load the QR image into baseImage, which triggers the onload handler
+        baseImage.src = qrImg.src;
+      }, 300); // wait a moment for QRCode.js to finish rendering
+    }
+
+    // This function lets the user download the final canvas as a PNG image
+    function downloadQR() {
+      const canvas = document.getElementById("finalCanvas");
+      const link = document.createElement("a");
+      link.download = "qr-code.png";                 // set the file name
+      link.href = canvas.toDataURL("image/png");     // get PNG data URL
+      link.click();                                  // auto-click to trigger download
+    }
+
+    // Set up the default form fields on page load
+    updateForm();
+  </script>
+</body>
+</html>
