@@ -1,4 +1,15 @@
+![The LimiPlake Logo](https://www.limiplake.com/limiplake.ico) `devhelper`: This page is only for developers; it helps them remember things.
+
+
+
+***
+***
+***
+***
+
 # List of pages in [limiplake.com](https://www.limiplake.com)
+
+## Undetailed List
 
 - join.html
 - about.html
@@ -13,6 +24,21 @@
 - team.html
 - apply.html
 
+***
+***
+
 > [!NOTE]
 >
-> This is only for ddevelopers.
+> This is only for developers.
+
+***
+***
+
+## Detailed List
+
+### join.html:
+Where you can become a student in the LimiPlay and LimiMake Further Courses, LimiPlay, and LimiMake.
+
+***
+
+### about.html:
