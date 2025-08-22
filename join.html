@@ -51,11 +51,15 @@
                         console.log("Client email sent successfully:", response);
                         window.location.href = "/joined";
                     }, function (error) {
-                        console.error("Couldn't make a student: lprr jn (emjs", error + ") Do not visit any of these links; instead, email anhad@limiplake.com this exact error.");
+                        console.error("Couldn't make a student: lprr jn (emjs ", error + ") Do not visit any of these links; instead, email anhad@limiplake.com this exact error.");
                         alert("Couldn't make you a student: lprr jn (emjs " + JSON.stringify(error) + ") Do not visit any of these links; instead, email anhad@limiplake.com this exact error.");
                     });
             });
         });
+
+        function getPayment() {
+            
+        }
     </script>
 </head>
 <body>
@@ -81,7 +85,7 @@
             <option value="Both LimiPlay and LimiMake">Both LimiPlay and LimiMake</option>
         </select><br><br>
 
-        <button id="becomeAStudent" type="submit">Click here to submit your info and become a student</button>
+        <button id="becomeAStudent" type="submit" onclick="getPayment()">Click here to submit your info and become a student</button>
     </form>
 </body>
 </html>
