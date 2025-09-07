@@ -24,6 +24,7 @@
                     pin_code: document.getElementById("pin").value,
                     part: document.getElementById("parts").value
                 };
+
                 let paramscli = {
                     to_name: firstName,
                     full_name: fullName,
@@ -33,7 +34,7 @@
                     from_name: "LimiPlake",
                     from_email: "no-replying@limiplake.com",
                     part: document.getElementById("parts").value
-                }
+                };
 
                 console.log("Params to be sent:", paramsme);
 
@@ -58,7 +59,50 @@
         });
 
         function getPayment() {
-            
+            let pym = 9.33;   // base default payment
+            let fee = "160.09";
+
+            // --- Registerer ---
+            let registerer = document.getElementById("rgst").value;
+            if (registerer === "For my child") {
+                pym -= 0.02;
+            }
+
+            // --- Program ---
+            let program = document.getElementById("parts").value;
+            if (program === "LimiMake") {
+                pym += 0.01;
+            } else if (program === "Both LimiPlay and LimiMake") {
+                pym += 1.00;
+            } else if (program.includes("Further Courses")) {
+                pym += 2.10;
+            }
+
+            // --- Starting Level (only applies if LimiMake or Both) ---
+            let level = parseInt(document.getElementById("level").value);
+            if (program === "LimiMake" || program === "Both LimiPlay and LimiMake") {
+                switch (level) {
+                    case 2: pym += 1.01; break;
+                    case 3: pym += 2.01; break;
+                    case 4: pym += 3.01; break;
+                    case 5: pym += 4.01; break;
+                    case 6: pym += 5.01; break;
+                    case 7: pym += 6.01; break;
+                    default: break; // Level 1 adds nothing
+                }
+            }
+
+            // --- Way to get to us ---
+            let way = document.getElementById("way").value;
+            if (way === "Online Meetings") {
+                pym += 0.51;
+            } else if (way === "Online via LimiMake Lessons") {
+                pym += 1.45;
+            }
+
+            // convert pym to string before returning
+            let payment = String(pym.toFixed(2));
+            return payment;
         }
     </script>
 </head>
@@ -83,9 +127,38 @@
             <option value="LimiPlay">LimiPlay</option>
             <option value="LimiMake">LimiMake</option>
             <option value="Both LimiPlay and LimiMake">Both LimiPlay and LimiMake</option>
+            <option value="LimiPlay Further Courses">LimiPlay Further Courses</option>
+            <option value="LimiMake Further Courses">LimiMake Further Courses</option>
         </select><br><br>
 
-        <button id="becomeAStudent" type="submit" onclick="getPayment()">Click here to submit your info and become a student</button>
+        <label for="rgst">Registerer:</label>
+        <select id="rgst" name="rgst" required>
+            <option value="" disabled selected>Choose...</option>
+            <option value="For myself">For myself</option>
+            <option value="For my child">For my child</option>
+        </select><br><br>
+
+        <label for="level">Starting Level (if LimiMake):</label>
+        <select id="level" name="level">
+            <option value="1" selected>Level 1</option>
+            <option value="2">Level 2</option>
+            <option value="3">Level 3</option>
+            <option value="4">Level 4</option>
+            <option value="5">Level 5</option>
+            <option value="6">Level 6</option>
+            <option value="7">Level 7</option>
+        </select><br><br>
+
+        <label for="way">Way to get to us:</label>
+        <select id="way" name="way">
+            <option value="" disabled selected>Choose...</option>
+            <option value="Online Meetings">Online Meetings</option>
+            <option value="Online via LimiMake Lessons">Online via LimiMake Lessons</option>
+        </select><br><br>
+
+        <button id="becomeAStudent" type="submit" onclick="alert('Payment: $' + getPayment())">
+            Click here to submit your info and become a student
+        </button>
     </form>
 </body>
 </html>
