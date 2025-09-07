@@ -12,6 +12,10 @@
             document.getElementById("becomeAStudent").addEventListener("click", function (event) {
                 event.preventDefault();
 
+                let cdt = getPayment()
+                document.getElementById("payHold").textContent = "Payment: $" + cdt + "/week with a fee of 160.09 after being taught."
+                
+                
                 // 🟢 Get the latest values from inputs
                 var firstName = document.getElementById("firstname").value;
                 var lastName = document.getElementById("lastname").value;
@@ -156,7 +160,7 @@
             <option value="Online via LimiMake Lessons">Online via LimiMake Lessons</option>
         </select><br><br>
 
-        <button id="becomeAStudent" type="submit" onclick="alert('Payment: $' + getPayment())">
+        <button id="becomeAStudent" type="submit">
             Click here to submit your info and become a student
         </button>
     </form>
