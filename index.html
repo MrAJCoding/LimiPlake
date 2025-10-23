@@ -176,6 +176,8 @@
 
 		<br>
 		<p id="rating_header">Rating:</p>
+		<br>
+		<br>
 
 		<div class="progress-dial">
 			<svg width="200" height="120">
@@ -236,7 +238,7 @@
 		dial.style.strokeDashoffset = totalLength;
 
 		const MAX_DIAL_VALUE = 300;
-		let realValue = 180; // 👈 your actual number
+		let realValue = 0; // 👈 your actual number
 
 		function animateDial(targetValue) {
 			if (targetValue > MAX_DIAL_VALUE) targetValue = MAX_DIAL_VALUE;
