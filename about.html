@@ -56,6 +56,7 @@
     /* Colored borders for section identity */
     .what  { border-left: 8px solid #007bff; } /* Blue for coding calm */
     .story { border-left: 8px solid #ff0000; } /* Red for music passion */
+    .timeline { border-left: 8px solid #000000; }
 
     .footer-line {
       text-align: center;
@@ -111,8 +112,18 @@
 
     <p>Now, <strong>LimiPlake</strong> isn’t just my project — it’s my dream come true. It’s a world where every learner can play their first song, write their first program, and discover the joy of making things. From a crayon poster in kindergarten to a real company with lessons, books, and ideas — that’s how LimiPlake began: from a dream on a poster to a place where everyone can learn from the <strong><span class="red">first note</span> to the <span class="blue">last line of code.</span></strong></p>
     <img src="playsb.png" id="AudioPlay" alt="Play Read Aloud" width="210">
-    <audio id="ReadAloudAudio" src=
+    <audio id="ReadAloudAudio" src="limiplake_story_readaloud.mp3" preload="auto"></audio>
+    <script>
+      const button = document.getElementById("AudioPlay");
+      const audio = document.getElementById("ReadAloudAuudio");
+      button.addEventListener("click", () => {
+        audio.currentTime = 0;
+        audio.play();
+      }
+    </script>
   </div>
+  <div class="section timeline">
+    <img src="
 
 </body>
 </html>
