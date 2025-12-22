@@ -94,29 +94,6 @@
 			font-family: "Playwrite HU";
 		}
 
-		.progress-dial {
-			position: relative;
-			width: 200px;
-			height: 120px;
-		}
-
-		.dial-bg {
-			fill: none;
-			stroke: #ddd;
-			stroke-width: 12;
-			stroke-linecap: round;
-		}
-
-		.dial-progress {
-			fill: none;
-			stroke: #22b6d4;
-			stroke-width: 12;
-			stroke-linecap: round;
-			stroke-dasharray: 251;
-			stroke-dashoffset: 251;
-			transition: stroke-dashoffset 0.02s linear;
-		}
-
 		#charts {
 			display: flex;
 			flex-direction: column;
@@ -124,9 +101,6 @@
 			justify-content: center;
 			margin-top: 30px;
 			float: left;
-		}
-		#rating_header {
-			font-family: "Lobster Two";
 		}
 		h1 {
 			font-family: "Playpen Sans";
@@ -145,7 +119,7 @@
 		<a href="/team">Team</a>
 		<a href="/qr_code_generator">QR Code Generator</a>
 		<a href="/apply">Apply</a>
-		<a href="https://fgigs.limiplake.com">Freelance Gigs</a>
+		<a href="https://feelance.limiplake.com">Freelance Gigs</a>
 		<a href="/postboards">Postboards</a>
     </div>
 
@@ -182,16 +156,7 @@
 		</div>
 
 		<br>
-		<p id="rating_header">Rating:</p>
-		<br>
-		<br>
-
-		<div class="progress-dial">
-			<svg width="200" height="120">
-				<path class="dial-bg" d="M20,100 A80,80 0 0,1 180,100"></path>
-				<path class="dial-progress" d="M20,100 A80,80 0 0,1 180,100"></path>
-			</svg>
-		</div>
+		
 	</div>
 	<div id="bodytext">
 		<p>Welcome to LimiPlake — where learning meets creativity.<br><br>LimiPlake is a home for explorers who love both music and coding. You can learn to play piano, write programs, and build your imagination one idea at a time. Whether you’re composing a tune or creating your first app, we’re here to help you grow, play, and make something amazing.</p>
@@ -241,37 +206,6 @@
 		// animate to your actual value
 		animateProgress(students);
 
-		const dial = document.querySelector('.dial-progress');
-
-		// total arc length for the path
-		const totalLength = 251;
-		dial.style.strokeDasharray = totalLength;
-		dial.style.strokeDashoffset = totalLength;
-
-		const MAX_DIAL_VALUE = 300;
-		let realValue = 0; // 👈 your actual number
-
-		function animateDial(targetValue) {
-			if (targetValue > MAX_DIAL_VALUE) targetValue = MAX_DIAL_VALUE;
-			if (targetValue < 0) targetValue = 0;
-
-			let currentValue = 0;
-
-			function update() {
-				const progress = currentValue / MAX_DIAL_VALUE;
-				const offset = totalLength - (progress * totalLength);
-				dial.style.strokeDashoffset = offset;
-
-				if (currentValue < targetValue) {
-					currentValue += targetValue / 100;
-					requestAnimationFrame(update);
-				}
-			}
-
-			requestAnimationFrame(update);
-		}
-
-		animateDial(realValue);
 	</script>
 </body>
 </html>
