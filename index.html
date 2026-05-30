@@ -137,9 +137,6 @@
 		<span style="color:#00ff00;">code.</span>
 	</h1>
 
-	<div id="notion">
-		<a href="https://www.notion.so/LimiPlake-Home-249eb5ff535b80928783e103d9cbb1f5">View our Notion page</a>
-	</div>
 
 	<div id="charts">
 		<div class="progress-ring">
@@ -150,7 +147,7 @@
 
 			<div class="progress-center">
 				<div id="progressValue">0</div>
-				<div id="progress-label">Students</div>
+				<div id="progress-label">Customers</div>
 			</div>
 		</div>
 
@@ -174,10 +171,10 @@
 		circle.style.strokeDashoffset = circumference;
 
 		// total capacity (full ring)
-		const MAX_RING_VALUE = 300;
+		const MAX_RING_VALUE = 1000;
 
 		// your real data
-		let students = 3; // 👈 change this number to your real value
+		let customers = 1; // 👈 change this number to your real value
 
 		function animateProgress(targetValue) {
 			if (targetValue > MAX_RING_VALUE) targetValue = MAX_RING_VALUE;
@@ -192,7 +189,7 @@
 				text.textContent = Math.round(currentValue);
 
 				if (currentValue < targetValue) {
-					currentValue += targetValue / 100;
+					currentValue += targetValue / 15;
 					requestAnimationFrame(update);
 				} else {
 					text.textContent = targetValue;
@@ -203,7 +200,7 @@
 		}
 
 		// animate to your actual value
-		animateProgress(students);
+		animateProgress(customers);
 
 	</script>
 </body>
